@@ -1,4 +1,4 @@
-luaos
+loveos
 =====
 
 Copyright (c) 2013 Jesse Horne
@@ -17,28 +17,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-# What is LuaOS?
-**LuaOS** is a "Virtual Operating-System" created by Jesse Horne with LÖVE. The goal was to create something, that anyone could add to their own LÖVE program, to give them something to interact with their game, or just for fun, that emulated a computer operating-system. If you are familiar with computercraft, then this should be pretty easy to understand.
+# What is LoveOS?
+**LoveOS** is a "Virtual Operating-System" created by Jesse Horne with LÖVE. The goal was to create something, that anyone could add to their own LÖVE program, to give them something to interact with their game, or just for fun, that emulated a computer operating-system. If you are familiar with computercraft, then this should be pretty easy to understand.
 
 # How do I put this in my game?
 First you will need to install [Love](https://love2d.org/). This has only been tested with version 0.8.0
-Then, put the _luaos_ folder that is inside this repo, into your games directory.
-In your main.lua, you will need to require "luaos" then put the luaos:load(), luaos:update(dt), luaos:draw(), and luaos:keypressed(key) functions into the proper callbacks.
+Then, put the _loveos_ folder that is inside this repo, into your games directory.
+In your main.lua, you will need to require "loveos" then put the loveos:load(), loveos:update(dt), loveos:draw(), and loveos:keypressed(key) functions into the proper callbacks.
 ***
 
 For example...
 ```lua
-require("luaos")
+require("loveos")
 function love.load()
-  luaos:load()
+  loveos:load()
 end
 function love.update(dt)
-  luaos:update(dt)
+  loveos:update(dt)
 end
 function love.draw()
-  luaos:draw()
+  loveos:draw()
 end
 function love.keypressed(key)
-  luaos:keypressed(key)
+  loveos:keypressed(key)
 end
 ```
