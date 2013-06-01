@@ -2,7 +2,7 @@
     Created by Jesse Horne 2013
     This library is used by LoveOS developers, to create awesome LoveOS applications to run on LoveOS. Because we love LoveOS.
 ]]--
-function loveos:prints(str)
+function loveos:prints(str) -- Used for printing strings of text
   if str ~= "" then
     loveos_curr_table = {}
     loveos_curr_table.text = str
@@ -23,7 +23,7 @@ function loveos:reload(mod) -- reload module function
   end
 end
 
-function loveos:add_function(name, desc)
+function loveos:add_function(name, desc) -- Used for adding function documentation. See filesystem.lua for example of use
   loveos_cmd_num = loveos_cmd_num + 1
   loveos.commands[loveos_cmd_num] = {}
   loveos.commands[loveos_cmd_num].name = name
