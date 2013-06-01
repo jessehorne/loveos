@@ -3,6 +3,30 @@ loveos = {}
 loveos.commands = {}
 loveos_cmd_num = 0
 
+loveos.fs = {}
+loveos.fs.dirs = {}
+loveos.fs.dirs["home"] = {}
+loveos.fs.dir = "home"
+
+loveos_screen_width = 800
+loveos_screen_height = 600
+loveos_start_x = 100
+loveos_start_y = 20
+
+loveos_font = love.graphics.newFont("loveos/font.ttf", 20)
+loveos_dir = "~"
+loveos_cursor_default = "$"
+loveos_font_w = loveos_font:getWidth(loveos_cursor_default)
+loveos_font_h = loveos_font:getHeight(loveos_cursor_default)
+loveos_cursor_x = loveos_start_x + 10
+loveos_cursor_y = loveos_start_y + (loveos_screen_height - 10 - loveos_font_h)
+loveos_cursor_orig = loveos_dir .. loveos.fs.dir .. loveos_cursor_default
+loveos_cursor = loveos_cursor_orig
+loveos_backlog_max = 28
+loveos_upper = false
+loveos_is_letter = false
+
+require("loveos.libs.libloveos")
 require("loveos.libs.filesystem")
 
 local loveos_disabled_keys = { --keys to disable in case they are not in use.
@@ -21,29 +45,6 @@ local keys_with_upper = {["1"] = "!", ["2"] = "@", ["3"] = "#", ["4"] = "$", ["5
                          ["7"] = "&", ["8"] = "*", ["9"] = "(", ["0"] = ")", ["-"] = "_", ["="] = "+",
                          ["["] = "{", ["]"] = "}", ["\\"] = "|", [";"] = ":", ["'"] = "\"", [","] = "<",
                          ["."] = ">", ["/"] = "?", ["`"] = "~" }
-
-loveos.fs = {}
-loveos.fs.dirs = {}
-loveos.fs.dirs["home"] = {}
-loveos.fs.dir = "home"
-
-local loveos_screen_width = 800
-local loveos_screen_height = 600
-local loveos_start_x = 100
-local loveos_start_y = 20
-
-local loveos_font = love.graphics.newFont("loveos/font.ttf", 20)
-local loveos_dir = "~"
-local loveos_cursor_default = "$"
-local loveos_font_w = loveos_font:getWidth(loveos_cursor_default)
-local loveos_font_h = loveos_font:getHeight(loveos_cursor_default)
-local loveos_cursor_x = loveos_start_x + 10
-local loveos_cursor_y = loveos_start_y + (loveos_screen_height - 10 - loveos_font_h)
-local loveos_cursor_orig = loveos_dir .. loveos.fs.dir .. loveos_cursor_default
-local loveos_cursor = loveos_cursor_orig
-local loveos_backlog_max = 28
-local loveos_upper = false
-local loveos_is_letter = false
 
 function string:split(sep) -- String splitting function
 	local sep, fields = sep or " ", {}
@@ -77,19 +78,6 @@ function loveos:printt(str)
   if table.concat(str) ~= "" then
     loveos_curr_table = {}
     loveos_curr_table.text = table.concat(str)
-    loveos_curr_table.x = loveos_cursor_x
-    loveos_curr_table.y = loveos_cursor_y - loveos_font_h
-    table.insert(loveos_backlog, loveos_curr_table)
-    for i,v in ipairs(loveos_backlog) do
-      v.y = v.y - loveos_font_h
-    end
-  end
-end
-
-function loveos:prints(str)
-  if str ~= "" then
-    loveos_curr_table = {}
-    loveos_curr_table.text = str
     loveos_curr_table.x = loveos_cursor_x
     loveos_curr_table.y = loveos_cursor_y - loveos_font_h
     table.insert(loveos_backlog, loveos_curr_table)
@@ -187,17 +175,4 @@ end
 function loveos:check_bb(ax1,ay1,aw,ah, bx1,by1,bw,bh) -- check_bb
   local ax2,ay2,bx2,by2 = ax1 + aw, ay1 + ah, bx1 + bw, by1 + bh
   return ax1 < bx2 and ax2 > bx1 and ay1 < by2 and ay2 > by1
-end
-
-function reload(mod) -- reload module function
-  if package.loaded[mod] ~= nil then
-    package.loaded[mod] = nil
-    require("loveos.libs." .. mod)
-    loveos:prints("module reloaded!")
-  end
-end
-
-function add_function(name, desc)
-  loveos.commands[name] = {}
-  loveos.commands[name].desc = desc
 end

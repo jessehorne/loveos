@@ -1,15 +1,8 @@
-function add_function(name, desc)
-  loveos_cmd_num = loveos_cmd_num + 1
-  loveos.commands[loveos_cmd_num] = {}
-  loveos.commands[loveos_cmd_num].name = name
-  loveos.commands[loveos_cmd_num].desc = desc
-end
-
-add_function("cd", "Used to change directories.")
-add_function("mkdir", "Used to make directories.")
-add_function("ls", "Used to list directories.")
-add_function("rm", "Used to remove directories.")
-add_function("help", "Get help on commands.")
+loveos:add_function("cd", "Used to change directories.")
+loveos:add_function("mkdir", "Used to make directories.")
+loveos:add_function("ls", "Used to list directories.")
+loveos:add_function("rm", "Used to remove directories.")
+loveos:add_function("help", "Get help on commands.")
 
 function cd(var)
   if var == ".." then
