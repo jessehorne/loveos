@@ -22,10 +22,3 @@ function loveos:reload(mod) -- reload module function
     loveos:prints("module reloaded!")
   end
 end
-
-function loveos:add_function(name, desc) -- Used for adding function documentation. See filesystem.lua for example of use
-  loveos_cmd_num = loveos_cmd_num + 1
-  loveos.commands[loveos_cmd_num] = {}
-  loveos.commands[loveos_cmd_num].name = name
-  loveos.commands[loveos_cmd_num].desc = desc
-end
