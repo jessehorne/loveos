@@ -131,12 +131,12 @@ function loveos:keypressed(key) -- Keypressed
     --table.insert(loveos_temp_str, 1, "> ")
     loveos_curr_string = table.concat(loveos_curr_string)
     loveos_curr_string = loveos_curr_string:split(" ")
-    local loveos_temp_var = loveos_curr_string[1]
+    local command = loveos_curr_string[1]
     table.remove(loveos_curr_string, 1)
     loveos:printt({"> ", unpack(loveos_temp_str)})
     --table.remove(loveos_temp_str, 1)
-    if _G[loveos_temp_var] ~= nil then
-      _G[loveos_temp_var](unpack(loveos_curr_string))
+    if loveos.commands[command] then
+      loveos.commands[command].func(unpack(loveos_curr_string))
     else
       loveos:prints("Invalid Command.")
     end
