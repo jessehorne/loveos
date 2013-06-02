@@ -1,5 +1,9 @@
 loveos.commands.cd = {
-	desc = "Used to change directories.",
+	desc = "Change the current working directory",
+	help = [[
+Usage: cd <directory>
+If <directory> is not found, the current working directory remains unchanged"
+]],
 	func = function(var)
 		if var == ".." then
 			if loveos.fs.dir ~= "home" then
@@ -23,7 +27,10 @@ loveos.commands.cd = {
 }
 
 loveos.commands.mkdir = {
-	desc = "Used to make directories.",
+	desc = "Create a directory",
+	help = [[
+Usage: mkdir <directory>
+]],
 	func = function(dir)
 		if dir ~= nil then
 			love.filesystem.mkdir( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir )
@@ -34,7 +41,13 @@ loveos.commands.mkdir = {
 }
 
 loveos.commands.ls = {
-	desc = "Used to list directory contents",
+	desc = "List directory contents",
+	help = [[
+Usage: ls [directory]
+
+If called without arguments, ls lists the contents of the current directory.
+Else, it lists the contents of <directory>
+]],
 	func = function(var)
 		if var ~= nil then
 			local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir .. "/" .. var)
@@ -51,7 +64,10 @@ loveos.commands.ls = {
 }
 
 loveos.commands.rm = {
-	desc = "Used to remove directories",
+	desc = "Remove a directory",
+	help = [[
+Usage: rm <directory>
+]],
 	func = function(dir)
 		if dir ~= nil then
 			if love.filesystem.exists( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir ) == true then
@@ -63,16 +79,25 @@ loveos.commands.rm = {
 
 loveos.commands.help = {
 	desc = "Get help on commands",
+	help = [[
+Usage: help [command]
+
+If called without arguments, help will list all commands and their short descriptions.
+If called with a command name as an argument, it will print a more detailed help for it.
+]],
 	func = function(cmd)
 		if cmd then
 			for k,v in pairs(loveos.commands) do
 				if cmd == k then
-					loveos:prints(k .. " | " .. v.desc)
+					loveos:prints(v.desc)
+					if v.help then
+						loveos:prints(v.help)
+					end
 				end
 			end
 		else
 			for k,v in pairs(loveos.commands) do
-				loveos:prints(k .. " | " .. v.desc)
+				loveos:prints(k .. " - " .. v.desc)
 			end
 		end
 	end
