@@ -4,7 +4,9 @@ loveos:add_function("ls", "Used to list directories.")
 loveos:add_function("rm", "Used to remove directories.")
 loveos:add_function("help", "Get help on commands.")
 
-function cd(var)
+loveos.commands = {}
+
+function loveos.commands.cd(var)
   if var == ".." then
     if loveos.fs.dir ~= "home" then
       local temp_table = {}
@@ -25,7 +27,7 @@ function cd(var)
   end
 end
 
-function mkdir(dir)
+function loveos.commands.mkdir(dir)
   if dir ~= nil then
     love.filesystem.mkdir( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir )
   elseif dir == nil then
@@ -33,7 +35,7 @@ function mkdir(dir)
   end
 end
 
-function ls(var)
+function loveos.commands.ls(var)
   if var ~= nil then
     local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir .. "/" .. var)
     for k, file in ipairs(files) do
@@ -47,7 +49,7 @@ function ls(var)
   end
 end
 
-function rm(dir)
+function loveos.commands.rm(dir)
   if dir ~= nil then
     if love.filesystem.exists( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir ) == true then
       love.filesystem.remove("loveos/fs/" .. loveos.fs.dir .. "/" .. dir)
@@ -55,7 +57,7 @@ function rm(dir)
   end
 end
 
-function help(cmd)
+function loveos.commands.help(cmd)
   if cmd ~= nil then
     for i,v in ipairs(loveos.commands) do
       if cmd == v.name then
