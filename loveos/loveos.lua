@@ -138,7 +138,7 @@ function loveos:keypressed(key) -- Keypressed
     if loveos.commands[command] then
       loveos.commands[command].func(unpack(loveos_curr_string))
     else
-      loveos:prints("Invalid Command.")
+      loveos:prints("No such command: " .. command)
     end
     loveos_curr_string = {}
   elseif key == "backspace" then -- Backspace
