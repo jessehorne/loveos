@@ -135,8 +135,8 @@ function loveos:keypressed(key) -- Keypressed
     table.remove(loveos_curr_string, 1)
     loveos:printt({"> ", unpack(loveos_temp_str)})
     --table.remove(loveos_temp_str, 1)
-    if _G[loveos_temp_var] ~= nil then
-      _G[loveos_temp_var](unpack(loveos_curr_string))
+    if loveos.commands[loveos_temp_var] ~= nil then
+      loveos.commands[loveos_temp_var](unpack(loveos_curr_string))
     else
       loveos:prints("Invalid Command.")
     end
