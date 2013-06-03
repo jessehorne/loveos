@@ -54,7 +54,7 @@ function string:split(sep) -- String splitting function
 end
 
 function loveos:load() -- Load
-
+  love.keyboard.setKeyRepeat(0.5, 0.03)
   love.graphics.setFont(loveos.font)
   
   loveos.backlog = {}
