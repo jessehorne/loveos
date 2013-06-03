@@ -4,13 +4,13 @@
 ]]--
 function loveos:prints(str) -- Used for printing strings of text
   if str ~= "" then
-    loveos_curr_table = {}
-    loveos_curr_table.text = str
-    loveos_curr_table.x = loveos_cursor_x
-    loveos_curr_table.y = loveos_cursor_y - loveos_font_h
-    table.insert(loveos_backlog, loveos_curr_table)
-    for i,v in ipairs(loveos_backlog) do
-      v.y = v.y - loveos_font_h
+    loveos.curr_table = {}
+    loveos.curr_table.text = str
+    loveos.curr_table.x = loveos.cursor_x
+    loveos.curr_table.y = loveos.cursor_y - loveos.font_h
+    table.insert(loveos.backlog, loveos.curr_table)
+    for i,v in ipairs(loveos.backlog) do
+      v.y = v.y - loveos.font_h
     end
   end
 end
