@@ -127,17 +127,17 @@ function loveos:keypressed(key) -- Keypressed
     end
   end
   if key == "return" then -- Return
-    loveos.temp_str = loveos.curr_string
+    local temp_str = loveos.curr_string
     --table.insert(loveos.temp_str, 1, "> ")
     loveos.curr_string = table.concat(loveos.curr_string)
     loveos.curr_string = loveos.curr_string:split(" ")
     local command = loveos.curr_string[1]
     table.remove(loveos.curr_string, 1)
-    loveos:printt({"> ", unpack(loveos.temp_str)})
+    loveos:printt({"> ", unpack(temp_str)})
     --table.remove(loveos.temp_str, 1)
     if loveos.commands[command] then
       loveos.commands[command].func(unpack(loveos.curr_string))
-    else
+    elseif command then
       loveos:prints("No such command: " .. command)
     end
     loveos.curr_string = {}
