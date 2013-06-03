@@ -92,9 +92,11 @@ If called with a command name as an argument, it will print a more detailed help
 					loveos:prints(v.desc)
 					if v.help then
 						loveos:prints(v.help)
+						return
 					end
 				end
 			end
+			loveos:prints("help: " .. cmd .. ": No such command.")
 		else
 			for k,v in pairs(loveos.commands) do
 				loveos:prints(k .. " - " .. v.desc)
