@@ -22,3 +22,7 @@ function loveos:reload(mod) -- reload module function
     loveos:prints("module reloaded!")
   end
 end
+
+function loveos:execute(file)
+  dofile(file)
+end
