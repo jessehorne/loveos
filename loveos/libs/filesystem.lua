@@ -104,3 +104,23 @@ If called with a command name as an argument, it will print a more detailed help
 		end
 	end
 }
+
+loveos.commands.run = {
+  desc = "Run Lua script",
+  help = [[ 
+Usage: run [script]
+
+If called without arguments, it will print an error to the console.
+If called with arguments, and the argument file exists, it will run that script.
+]],
+  func = function(var)
+    if var ~= nil then
+      if love.filesystem.exists( "loveos/fs/" .. loveos.fs.dir .. "/" .. var ) == true then
+        script = love.filesystem.load( "loveos/fs/" .. loveos.fs.dir .. "/" .. var )
+        script()
+      else
+        loveos:prints("File does not exist!")
+      end
+    end
+  end
+}
