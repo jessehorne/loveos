@@ -91,7 +91,7 @@ If called with a command name as an argument, it will print a more detailed help
 		if cmd then
 			for k,v in pairs(loveos.commands) do
 				if cmd == k then
-					loveos:prints(v.desc)
+					loveos:prints(v.desc .. '\n')
 					if v.help then
 						loveos:prints(v.help)
 						return
