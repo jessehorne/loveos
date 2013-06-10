@@ -28,6 +28,7 @@ loveos.is_letter = false
 
 require("loveos.libs.libloveos")
 require("loveos.libs.filesystem")
+loveos.term = require("term")
 
 local disabled_keys = { --keys to disable in case they are not in use.
   "up","down","left","right","home","end","pageup","pagedown","return",--Navigation keys
@@ -59,32 +60,19 @@ function loveos:load() -- Load
   
   loveos.backlog = {}
   loveos.curr_string = {}
-
-  loveos.welcome_msg = {} 
-  for i=1, 4 do loveos.welcome_msg[i] = {} end
-  table.insert(loveos.welcome_msg[1], "loveos-Created by Jesse Horne")
-  table.insert(loveos.welcome_msg[2], "(github.com/jessehorne)")
-  table.insert(loveos.welcome_msg[3], "Configuring stuff...")
-  table.insert(loveos.welcome_msg[4], "Booted!")
-  for i,v in ipairs(loveos.welcome_msg) do
-    loveos:printt(v)
-  end
+  
+  loveos.term:init(loveos.screen_width / loveos.font:getWidth('a'), loveos.screen_height / loveos.font:getHeight(), loveos.font)
+  
+  loveos:prints([[
+loveos-Created by Jesse Horne
+(github.com/jessehorne)
+Configuring stuff...
+Booted!
+]])
+  loveos:prints(loveos.cursor)
 
   loveos.cursor_place = #loveos.cursor
 
-end
-
-function loveos:printt(str)
-  if table.concat(str) ~= "" then
-    loveos.curr_table = {}
-    loveos.curr_table.text = table.concat(str)
-    loveos.curr_table.x = loveos.cursor_x
-    loveos.curr_table.y = loveos.cursor_y - loveos.font_h
-    table.insert(loveos.backlog, loveos.curr_table)
-    for i,v in ipairs(loveos.backlog) do
-      v.y = v.y - loveos.font_h
-    end
-  end
 end
 
 function loveos:update(dt) -- Update
@@ -97,28 +85,15 @@ end
 function loveos:draw() -- Draw
   love.graphics.setColor(0,0,0)
   love.graphics.rectangle("fill", loveos.start_x, loveos.start_y, loveos.screen_width, loveos.screen_height)
+  loveos.term:draw(loveos.start_x + 5, loveos.start_y + 5)
   love.graphics.setColor(150,150,150)
   love.graphics.setLine(10)
-  love.graphics.rectangle("line", loveos.start_x, loveos.start_y, loveos.screen_width, loveos.screen_height)
-  love.graphics.setLine(1)
-  love.graphics.setColor(255,255,255)
-  love.graphics.print(loveos.cursor, loveos.cursor_x, loveos.cursor_y)
-
-  -- Draw Current line
-  love.graphics.print(table.concat(loveos.curr_string), loveos.cursor_x + (#loveos.cursor*loveos.font_w) + loveos.font_w, loveos.cursor_y)
-
-  -- Draw backlog
-  for i,v in ipairs(loveos.backlog) do
-    if i > (#loveos.backlog - loveos.backlog_max) then love.graphics.print(v.text, loveos.start_x + 10, loveos.start_y + v.y) end
-  end
-
-  -- Draw Cursor
-  love.graphics.rectangle("fill", loveos.cursor_x + (loveos.cursor_place*loveos.font_w)+loveos.font_w, loveos.cursor_y, loveos.font_w, loveos.font_h)
-
+  love.graphics.rectangle("line", loveos.start_x, loveos.start_y, loveos.screen_width + 10, loveos.screen_height + 10)
 end
 
-function loveos:keypressed(key) -- Keypressed
-
+function loveos:keypressed(key, unicode) -- Keypressed
+  if key == "up" then loveos.term:scroll(-1) end
+  if key == "down" then loveos.term:scroll(1) end
   loveos.can_put = true
   for i,v in ipairs(disabled_keys) do
     if key == v then
@@ -133,35 +108,40 @@ function loveos:keypressed(key) -- Keypressed
     loveos.curr_string = loveos.curr_string:split(" ")
     local command = loveos.curr_string[1]
     table.remove(loveos.curr_string, 1)
-    loveos:printt({"> ", unpack(temp_str)})
+    --loveos:printt({"> ", unpack(temp_str)})
     --table.remove(loveos.temp_str, 1)
+    loveos:prints("\n")
     if loveos.commands[command] then
       loveos.commands[command].func(unpack(loveos.curr_string))
     elseif command then
-      loveos:prints("No such command: " .. command)
+      loveos:prints("No such command: " .. command .. "\n")
     end
+    loveos:prints(loveos.cursor)
     loveos.curr_string = {}
   elseif key == "backspace" then -- Backspace
-    table.remove(loveos.curr_string, #loveos.curr_string)
+    if #loveos.curr_string > 0 then
+      table.remove(loveos.curr_string, #loveos.curr_string)
+      loveos.term:pop()
+      loveos.term:update()
+    end
     if loveos.cursor_place > #loveos.cursor then loveos.cursor_place = loveos.cursor_place - 1 end
   elseif key == "rshift" or key == "lshift" then
     loveos.upper = true
   end
   if loveos.can_put == true then
-    if #loveos.curr_string < 46 then -- Checks to make sure the current string isnt to large
-      loveos.cursor_place = loveos.cursor_place + 1 -- Adds 1 space to the cursor
-      if loveos.upper == true then -- Handles Uppercase
-        for i,v in ipairs(letters) do 
-          if key == v then 
-            key = string.upper(key)
-            loveos.is_letter = true
-          end 
-        end
-        if loveos.is_letter == false then key = keys_with_upper[key] end
+    loveos.cursor_place = loveos.cursor_place + 1 -- Adds 1 space to the cursor
+    if loveos.upper == true then -- Handles Uppercase
+      for i,v in ipairs(letters) do 
+        if key == v then 
+          key = string.upper(key)
+          loveos.is_letter = true
+        end 
       end
-      loveos.is_letter = false
-      table.insert(loveos.curr_string, key) -- adds the key just pressed to the currstring
+      if loveos.is_letter == false then key = keys_with_upper[key] end
     end
+    loveos.is_letter = false
+    table.insert(loveos.curr_string, key) -- adds the key just pressed to the currstring
+    loveos:prints(string.char(unicode))
   end
 
 end

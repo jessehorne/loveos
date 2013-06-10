@@ -16,8 +16,8 @@ function love.draw()
   loveos:draw()
 end
 
-function love.keypressed(key)
-  loveos:keypressed(key)
+function love.keypressed(key, unicode)
+  loveos:keypressed(key, unicode)
 end
 
 function love.keyreleased(key)
