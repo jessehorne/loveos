@@ -35,7 +35,7 @@ Usage: mkdir <directory>
 		if dir ~= nil then
 			love.filesystem.mkdir( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir )
 		elseif dir == nil then
-			loveos:prints("Please enter a real file name!")
+			loveos:prints("Please enter a real file name!\n")
 		end
 	end
 }
@@ -52,13 +52,15 @@ Else, it lists the contents of <directory>
 		if var ~= nil then
 			local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir .. "/" .. var)
 			for k, file in ipairs(files) do
-					loveos:prints(file) --outputs something like "1. main.lua"
+					loveos:prints(file .. ' ') --outputs something like "1. main.lua"
 			end
+      loveos:prints("\n")
 		elseif var == nil then
 			local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir)
 			for k, file in ipairs(files) do
-					loveos:prints(file) --outputs something like "1. main.lua"
+					loveos:prints(file .. ' ') --outputs something like "1. main.lua"
 			end
+      if #files > 0 then loveos:prints("\n") end
 		end
 	end
 }
@@ -96,10 +98,10 @@ If called with a command name as an argument, it will print a more detailed help
 					end
 				end
 			end
-			loveos:prints("help: " .. cmd .. ": No such command.")
+			loveos:prints("help: " .. cmd .. ": No such command.\n")
 		else
 			for k,v in pairs(loveos.commands) do
-				loveos:prints(k .. " - " .. v.desc)
+				loveos:prints(k .. " - " .. v.desc .. "\n")
 			end
 		end
 	end
@@ -119,7 +121,7 @@ If called with arguments, and the argument file exists, it will run that script.
         script = love.filesystem.load( "loveos/fs/" .. loveos.fs.dir .. "/" .. var )
         script()
       else
-        loveos:prints("File does not exist!")
+        loveos:prints("File does not exist!\n")
       end
     end
   end
