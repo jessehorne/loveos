@@ -101,4 +101,9 @@ function term:pop()
   self.cursor = self.cursor - 1
 end
 
+function term:clear()
+  self.buffer = {}
+  self.cursor = 0
+end
+
 return term
