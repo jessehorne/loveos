@@ -63,7 +63,7 @@ function term:update()
     y = y + 1
   end
   -- Draw the cursor
-  love.graphics.rectangle('fill', (self.cursor % self.w) * self.fontW, math.floor((self.cursor / self.w)) * self.fontH, self.fontW, self.fontH)
+  love.graphics.rectangle('fill', (self.cursor % self.w) * self.fontW, (math.floor((self.cursor / self.w)) - self.lineOff) * self.fontH, self.fontW, self.fontH)
   love.graphics.setCanvas()
 end
 
