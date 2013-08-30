@@ -26,6 +26,27 @@ If <directory> is not found, the current working directory remains unchanged"
 	end
 }
 
+loveos.commands.touch = {
+  desc = "Create a text file",
+  help = [[
+  Usage: touch <file>
+  Create a file named <file>
+]],
+  func = function(name)
+    if name ~= nil then
+      if love.filesystem.exists(name) then
+        loveos:prints("File already exists!\n")
+      else
+        local file = love.filesystem.newFile("loveos/fs/" .. loveos.fs.dir .. "/" .. name )
+        file:open("w")
+        file:close()
+      end
+    else
+      loveos:prints("Provide second argument file name please.\n")
+    end
+  end
+}
+
 loveos.commands.mkdir = {
 	desc = "Create a directory",
 	help = [[
