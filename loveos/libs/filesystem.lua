@@ -2,7 +2,7 @@ loveos.commands.cd = {
 	desc = "Change the current working directory",
 	help = [[
 Usage: cd <directory>
-If <directory> is not found, the current working directory remains unchanged"
+If <directory> is not found, the current working directory remains unchanged
 ]],
 	func = function(var)
 		if var == ".." then

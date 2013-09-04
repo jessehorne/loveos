@@ -29,6 +29,8 @@ loveos.is_letter = false
 require("loveos.libs.libloveos")
 require("loveos.libs.filesystem")
 require("loveos.libs.etc")
+require("loveos.libs.tools")
+
 loveos.term = require("term")
 
 local disabled_keys = { --keys to disable in case they are not in use.
