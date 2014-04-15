@@ -14,8 +14,8 @@ loveos.start_x = 100
 loveos.start_y = 20
 
 loveos.font = love.graphics.newFont("loveos/font.ttf", 20)
-loveos.dir = "~"
-loveos.cursor_default = "$"
+loveos.dir = ""
+loveos.cursor_default = " - "
 loveos.font_w = loveos.font:getWidth(loveos.cursor_default)
 loveos.font_h = loveos.font:getHeight(loveos.cursor_default)
 loveos.cursor_x = loveos.start_x + 10
@@ -90,7 +90,7 @@ function loveos:draw() -- Draw
   love.graphics.rectangle("fill", loveos.start_x, loveos.start_y, loveos.screen_width, loveos.screen_height)
   loveos.term:draw(loveos.start_x + 5, loveos.start_y + 5)
   love.graphics.setColor(150,150,150)
-  love.graphics.setLine(10)
+  love.graphics.setLineWidth(10)
   love.graphics.rectangle("line", loveos.start_x, loveos.start_y, loveos.screen_width + 10, loveos.screen_height + 10)
 end
 
@@ -119,7 +119,7 @@ function loveos:keypressed(key, unicode) -- Keypressed
     elseif command then
       loveos:prints("No such command: " .. command .. "\n")
     end
-    loveos:prints(loveos.cursor)
+    loveos:prints(loveos.dir .. loveos.fs.dir .. loveos.cursor_default)
     loveos.curr_string = {}
   elseif key == "backspace" then -- Backspace
     if #loveos.curr_string > 0 then
@@ -144,7 +144,7 @@ function loveos:keypressed(key, unicode) -- Keypressed
     end
     loveos.is_letter = false
     table.insert(loveos.curr_string, key) -- adds the key just pressed to the currstring
-    loveos:prints(string.char(unicode))
+    loveos:prints(key)
   end
 
 end

@@ -18,7 +18,7 @@ If <directory> is not found, the current working directory remains unchanged
 			if love.filesystem.exists( "loveos/fs/" .. loveos.fs.dir .. "/" .. var ) == true then
 				loveos.fs.dir = loveos.fs.dir .. "/" .. var
 			else
-				loveos:prints("File not found!")
+				loveos:prints("File not found!\n")
 			end
 		else
 			loveos.fs.dir = "home"
@@ -54,7 +54,7 @@ Usage: mkdir <directory>
 ]],
 	func = function(dir)
 		if dir ~= nil then
-			love.filesystem.mkdir( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir )
+			love.filesystem.createDirectory( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir )
 		elseif dir == nil then
 			loveos:prints("Please enter a real file name!\n")
 		end
@@ -71,13 +71,13 @@ Else, it lists the contents of <directory>
 ]],
 	func = function(var)
 		if var ~= nil then
-			local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir .. "/" .. var)
+			local files = love.filesystem.getDirectoryItems("loveos/fs/" .. loveos.fs.dir .. "/" .. var)
 			for k, file in ipairs(files) do
 					loveos:prints(file .. ' ') --outputs something like "1. main.lua"
 			end
       loveos:prints("\n")
 		elseif var == nil then
-			local files = love.filesystem.enumerate("loveos/fs/" .. loveos.fs.dir)
+			local files = love.filesystem.getDirectoryItems("loveos/fs/" .. loveos.fs.dir)
 			for k, file in ipairs(files) do
 					loveos:prints(file .. ' ') --outputs something like "1. main.lua"
 			end
@@ -96,6 +96,8 @@ Usage: rm <directory>
 			if love.filesystem.exists( "loveos/fs/" .. loveos.fs.dir .. "/" .. dir ) == true then
 				love.filesystem.remove("loveos/fs/" .. loveos.fs.dir .. "/" .. dir)
 			end
+		else
+			loveos:prints("Please put a file argument!\n")
 		end
 	end
 }
