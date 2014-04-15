@@ -66,12 +66,7 @@ function loveos:load() -- Load
   
   loveos.term:init(loveos.screen_width / loveos.font:getWidth('a'), loveos.screen_height / loveos.font:getHeight(), loveos.font)
   
-  loveos:prints([[
-loveos-Created by Jesse Horne
-(github.com/jessehorne)
-Configuring stuff...
-Booted!
-]])
+  loveos:prints("loveos - github.com/jessehorne/loveos\n")
   loveos:prints(loveos.cursor)
 
   loveos.cursor_place = #loveos.cursor
