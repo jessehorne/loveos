@@ -4,7 +4,7 @@ loveos
 ![ScreenShot](https://raw.github.com/jessehorne/loveos/master/screenshot.png)
 
 # What is LoveOS?
-**LoveOS** is a "Virtual Operating-System" created by Jesse Horne with LÖVE. The goal was to create something, that anyone could add to their own LÖVE program, to give them something to interact with their game, or just for fun, that emulated a computer operating-system. If you are familiar with computercraft, then this should be pretty easy to understand.
+**LoveOS** is a Simulated Terminal created by Jesse Horne with LÖVE. The goal was to create something, that anyone could add to their own LÖVE program, to give them something to interact with their game, or just for fun, that simulated a terminal. If you are familiar with computercraft, then this should be pretty easy to understand.
 
 # How do I put this in my game?
 First you will need to install [Love](https://love2d.org/). This has only been tested with version 0.8.0
